@@ -89,7 +89,7 @@ const MENU_JOKI = [
     { n: "✦ Terror Shark Hunt (Eyes/Tooth)x1", p: 5000 },
     { n: "✦ Blaze Ember (99x)", p: 10000 },
     { n: "✦ Kitsune Mask / Ribbon", p: 10000 },
-    { n: "✦ Bones / Ectoplasm Farming(100x)", p: 10000 },
+    { n: "✦ Bones / Ectoplasm Farming(100x)", p: 1000 },
     { n: "✦ Dragon Heart / Storm", p: 20000 },
     { n: "✦ TOTS (Tyrant Of The Sky)", p: 5000 }
 ];
@@ -279,3 +279,4 @@ document.getElementById('togglePassword').onclick = function() {
 };
 
 window.onload = init;
+
