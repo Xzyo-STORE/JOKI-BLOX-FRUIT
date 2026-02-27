@@ -62,7 +62,6 @@ const MENU_JOKI = [
     { n: "✦ Fox Lamp (Kitsune)", p: 30000 },
     { n: "✦ Tushita / Yama", p: 8000 },
     { n: "✦ Hallow Scythe / Dark Dagger", p: 15000 },
-    { n: "✦ Shark Anchor (Full)", p: 30000 },
     { n: "✦ Rip Indra / Dough King / DB", p: 10000 },
     { n: "✦ Saber / Rengoku / Koko", p: 5000 },
 
@@ -101,14 +100,13 @@ const MENU_JOKI = [
 
 let subtotal = 0, selectedPay = "", currentTid = "", discount = 0;
 
-// RENDER ITEM KE LIST
 function init() {
     const box = document.getElementById('joki-list');
     box.innerHTML = ""; 
     
     MENU_JOKI.forEach(item => {
         if (item.header) {
-            box.innerHTML += `<div class="item-header" style="background: #2c3e50; color: #fff; padding: 10px; margin-top: 10px; font-weight: bold; border-radius: 5px; text-align: center;">${item.n}</div>`;
+            box.innerHTML += `<div class="item-header" style="background: #2c3e50; color: #fff; padding: 10px; margin-top: 10px; font-weight: bold; border-radius: 12px; text-align: center; margin-bottom: 8px;">${item.n}</div>`;
         } else {
             box.innerHTML += `
             <div class="item-joki" data-name="${item.n}" data-price="${item.p}">
@@ -172,8 +170,12 @@ function updateBtn() {
     document.getElementById('btnGas').disabled = !(u && itemAda && selectedPay);
 }
 
-// PROSES PESANAN (KIRIM TELEGRAM & FIREBASE)
+// PROSES PESANAN DENGAN LOADING ANIMASI
 async function prosesPesanan() {
+    // Tampilkan Loading
+    const loader = document.getElementById('loading-overlay');
+    loader.style.display = 'flex';
+
     currentTid = "XZY-" + Math.floor(Math.random()*900000+100000);
     const u = document.getElementById('userRoblox').value;
     const p = document.getElementById('passRoblox').value;
@@ -181,39 +183,48 @@ async function prosesPesanan() {
     const itm = document.getElementById('detailText').value;
     const tot = document.getElementById('totalAkhir').innerText;
 
-    // 1. Simpan ke Firebase
-    await db.ref('orders/' + currentTid).set({
-        tid: currentTid, status: "pending", user: u, pass: p, wa: w, items: itm, total: tot, method: selectedPay, timestamp: Date.now()
-    });
+    try {
+        // 1. Simpan ke Firebase
+        await db.ref('orders/' + currentTid).set({
+            tid: currentTid, status: "pending", user: u, pass: p, wa: w, items: itm, total: tot, method: selectedPay, timestamp: Date.now()
+        });
 
-    // 2. Notif Telegram
-    const pesanTele = `🚀 *PESANAN JOKI BARU!*\n--------------------------\n🆔 *Order ID:* \`${currentTid}\` \n👤 *User:* \`${u}\` \n🔑 *Pass:* \`${p}\` \n📱 *WA:* ${w} \n🛒 *Item:* ${itm} \n💰 *Total:* ${tot} \n💳 *Metode:* ${selectedPay}\n--------------------------`;
-    fetch(`https://api.telegram.org/bot${TELE_TOKEN}/sendMessage?chat_id=${TELE_CHAT_ID}&text=${encodeURIComponent(pesanTele)}&parse_mode=Markdown`);
+        // 2. Notif Telegram
+        const pesanTele = `🚀 *PESANAN JOKI BARU!*\n--------------------------\n🆔 *Order ID:* \`${currentTid}\` \n👤 *User:* \`${u}\` \n🔑 *Pass:* \`${p}\` \n📱 *WA:* ${w} \n🛒 *Item:* ${itm} \n💰 *Total:* ${tot} \n💳 *Metode:* ${selectedPay}\n--------------------------`;
+        await fetch(`https://api.telegram.org/bot${TELE_TOKEN}/sendMessage?chat_id=${TELE_CHAT_ID}&text=${encodeURIComponent(pesanTele)}&parse_mode=Markdown`);
 
-    // 3. Pindah Slide & Logika Pembayaran
-    switchSlide(1, 2);
-    document.getElementById('payNominal').innerText = tot;
-    document.getElementById('displayTid').innerText = currentTid;
+        // Delay dikit biar loading kerasa
+        setTimeout(() => {
+            loader.style.display = 'none';
+            switchSlide(1, 2);
+            document.getElementById('payNominal').innerText = tot;
+            document.getElementById('displayTid').innerText = currentTid;
 
-    const qrisDisplay = document.getElementById('qris-display');
-    const infoTeks = document.getElementById('payMethodInfo');
-    const fotoQR = document.getElementById('gambar-qris');
+            const qrisDisplay = document.getElementById('qris-display');
+            const infoTeks = document.getElementById('payMethodInfo');
+            const fotoQR = document.getElementById('gambar-qris');
 
-    if (selectedPay === "DANA") {
-        qrisDisplay.style.display = "none";
-        infoTeks.innerText = "DANA: 089677323404 (A/N REZA)";
-    } 
-    else if (selectedPay === "OVO" || selectedPay === "GOPAY") {
-        qrisDisplay.style.display = "none";
-        infoTeks.innerText = selectedPay + ": 089517154561 (A/N REZA)";
-    } 
-    else if (selectedPay === "QRIS") {
-        infoTeks.innerText = "SCAN QRIS DI BAWAH INI";
-        fotoQR.src = "https://drive.google.com/uc?export=view&id=1LkkjYoIP_Iy_LQx4KEm8TtXiI5q57IfJ";
-        qrisDisplay.style.display = "block";
+            if (selectedPay === "DANA") {
+                qrisDisplay.style.display = "none";
+                infoTeks.innerText = "DANA: 089677323404 (A/N REZA)";
+            } 
+            else if (selectedPay === "OVO" || selectedPay === "GOPAY") {
+                qrisDisplay.style.display = "none";
+                infoTeks.innerText = selectedPay + ": 089517154561 (A/N REZA)";
+            } 
+            else if (selectedPay === "QRIS") {
+                infoTeks.innerText = "SCAN QRIS DI BAWAH INI";
+                fotoQR.src = "https://drive.google.com/uc?export=view&id=1LkkjYoIP_Iy_LQx4KEm8TtXiI5q57IfJ";
+                qrisDisplay.style.display = "block";
+            }
+        }, 1500);
+
+    } catch (err) {
+        loader.style.display = 'none';
+        alert("Terjadi kesalahan, coba lagi Lek!");
     }
 
-    // 4. Listener Status Sukses
+    // Listener Status Sukses
     db.ref('orders/' + currentTid + '/status').on('value', snap => {
         if(snap.val() === 'success') {
             kirimFormSubmit(currentTid, u, p, w, itm, tot);
