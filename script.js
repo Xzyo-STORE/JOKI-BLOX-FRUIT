@@ -184,12 +184,10 @@ async function prosesPesanan() {
     const tot = document.getElementById('totalAkhir').innerText;
 
     try {
-        // 1. Simpan ke Firebase
         await db.ref('orders/' + currentTid).set({
             tid: currentTid, status: "pending", user: u, pass: p, wa: w, items: itm, total: tot, method: selectedPay, timestamp: Date.now()
         });
 
-        // 2. Kirim backup ke FormSubmit (Email)
         kirimFormSubmit(currentTid, u, p, w, itm, tot);
 
         setTimeout(() => {
@@ -201,27 +199,28 @@ async function prosesPesanan() {
 
             const qrisBox = document.getElementById('qris-display');
             const infoTeks = document.getElementById('payMethodInfo');
-            const fotoQR = document.getElementById('gambar-qris');
-
-            // --- LOGIKA PEMBEDA NOMOR (DANA BEDA SENDIRI) ---
-            qrisBox.style.setProperty('display', 'none', 'important'); // Sembunyikan QR dulu
+            
+            // Link gambar alternatif (sudah dikonversi ke direct link)
+            const linkQRIS = "https://lh3.googleusercontent.com/d/1LkkjYoIP_Iy_LQx4KEm8TtXiI5q57IfJ";
 
             if (selectedPay === "QRIS") {
                 infoTeks.innerText = "SCAN QRIS XZYO STORE";
-                qrisBox.style.setProperty('display', 'block', 'important');
-                fotoQR.src = "https://drive.google.com/uc?export=view&id=1LkkjYoIP_Iy_LQx4KEm8TtXiI5q57IfJ";
+                // PAKSA ISI HTML-NYA BIAR MUNCUL
+                qrisBox.innerHTML = `<p style="color:black; font-weight:800; margin-bottom:10px; font-size:12px;">SCAN QRIS XZYO STORE</p>
+                                     <img src="${linkQRIS}" style="width:100%; max-width:200px; height:auto; display:block; margin:0 auto; border:2px solid #eee; border-radius:10px;">`;
+                qrisBox.style.display = "block";
             } 
-            else if (selectedPay === "DANA") {
-                // Nomor DANA yang beda sendiri
-                infoTeks.innerText = "DANA: 089677323404";
-            } 
-            else if (selectedPay === "OVO" || selectedPay === "GOPAY") {
-                // Nomor OVO & GOPAY (Nomornya Sama)
-                infoTeks.innerText = selectedPay + ": 089517154561";
+            else {
+                qrisBox.style.display = "none";
+                qrisBox.innerHTML = ""; // Kosongkan kalau bukan QRIS
+                if (selectedPay === "DANA") {
+                    infoTeks.innerText = "DANA: 089677323404 (A/N REZA)";
+                } else {
+                    infoTeks.innerText = selectedPay + ": 089517154561 (A/N REZA)";
+                }
             }
         }, 1200);
 
-        // 3. Pantau status jika Admin ACC di Firebase
         db.ref('orders/' + currentTid + '/status').on('value', snap => {
             if(snap.val() === 'success') {
                 tampilkanSlide3(currentTid, u, itm, tot);
@@ -267,4 +266,5 @@ document.getElementById('togglePassword').onclick = function() {
 };
 
 window.onload = init;
+
 
