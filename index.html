@@ -12,6 +12,11 @@
 </head>
 <body>
 
+<div id="loading-overlay" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(1, 4, 9, 0.9); z-index:9999; flex-direction:column; justify-content:center; align-items:center;">
+    <div class="loader-spinner"></div>
+    <p style="color:var(--primary); margin-top:15px; font-weight:800; letter-spacing:2px;">MEMPROSES PESANAN...</p>
+</div>
+
 <div class="container">
     <div id="slide-1" class="slide active">
         <div class="main-grid">
@@ -31,31 +36,34 @@
 
                 <div class="summary-box">
                     <textarea id="detailText" readonly placeholder="Item sing dipilih..."></textarea>
-                    <div class="total-row"><span>TOTAL:</span><span id="totalAkhir">Rp 0</span></div>
+                    <div class="total-row" style="display: flex; justify-content: space-between; font-weight: 800; margin-top: 10px;">
+                        <span>TOTAL:</span>
+                        <span id="totalAkhir">Rp 0</span>
+                    </div>
                 </div>
 
                 <p style="font-size: 12px; color: #8b949e; margin-bottom: 10px; text-transform: uppercase;">Pilih Metode Pembayaran:</p>
-<div class="pay-list">
-    <div class="pay-bar" onclick="selectPay('DANA', this)">
-        <span>DANA</span>
-        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/7/72/Logo_dana_blue.svg/1200px-Logo_dana_blue.svg.png">
-    </div>
+                <div class="pay-list">
+                    <div class="pay-bar" onclick="selectPay('DANA', this)">
+                        <span>DANA</span>
+                        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/7/72/Logo_dana_blue.svg/1200px-Logo_dana_blue.svg.png" alt="DANA">
+                    </div>
 
-    <div class="pay-bar" onclick="selectPay('OVO', this)">
-        <span>OVO</span>
-        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/e/eb/Logo_ovo_purple.svg/1200px-Logo_ovo_purple.svg.png">
-    </div>
+                    <div class="pay-bar" onclick="selectPay('OVO', this)">
+                        <span>OVO</span>
+                        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/e/eb/Logo_ovo_purple.svg/1200px-Logo_ovo_purple.svg.png" alt="OVO">
+                    </div>
 
-    <div class="pay-bar" onclick="selectPay('GOPAY', this)">
-        <span>GOPAY</span>
-        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/8/86/Gopay_logo.svg/1200px-Gopay_logo.svg.png">
-    </div>
+                    <div class="pay-bar" onclick="selectPay('GOPAY', this)">
+                        <span>GOPAY</span>
+                        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/8/86/Gopay_logo.svg/1200px-Gopay_logo.svg.png" alt="GOPAY">
+                    </div>
 
-    <div class="pay-bar" onclick="selectPay('QRIS', this)">
-        <span>QRIS / ALL PAY</span>
-        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/a2/Logo_QRIS.svg/1200px-Logo_QRIS.svg.png">
-    </div>
-</div>
+                    <div class="pay-bar" onclick="selectPay('QRIS', this)">
+                        <span>QRIS / ALL PAY</span>
+                        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/a2/Logo_QRIS.svg/1200px-Logo_QRIS.svg.png" alt="QRIS">
+                    </div>
+                </div>
                 <button id="btnGas" class="btn-primary" disabled onclick="prosesPesanan()">BAYAR SEKARANG</button>
             </div>
 
@@ -67,24 +75,24 @@
     </div>
 
     <div id="slide-2" class="slide">
-    <div class="card text-center">
-        <div class="loader-wrap"><i class="fas fa-qrcode"></i></div>
-        <h2 class="title">Selesaikan Pembayaran</h2>
-        
-        <div class="invoice-card">
-            <div class="inv-row"><span>Order ID:</span> <b id="displayTid"></b></div>
-            <div class="inv-row"><span>Total:</span> <b id="payNominal" style="color:var(--primary)"></b></div>
-            <div class="inv-row"><span>Metode:</span> <b id="payMethodInfo"></b></div>
-        </div>
+        <div class="card text-center">
+            <div class="loader-wrap"><i class="fas fa-qrcode"></i></div>
+            <h2 class="title">Selesaikan Pembayaran</h2>
+            
+            <div class="invoice-card">
+                <div class="inv-row"><span>Order ID:</span> <b id="displayTid"></b></div>
+                <div class="inv-row"><span>Total:</span> <b id="payNominal" style="color:var(--primary)"></b></div>
+                <div class="inv-row"><span>Metode:</span> <b id="payMethodInfo"></b></div>
+            </div>
 
-        <div id="qris-display" style="display:none; background:white; padding:15px; border-radius:15px; margin: 15px 0;">
-            <p style="color:black; font-weight:800; margin-bottom:10px; font-size:12px;">SCAN QRIS XZYO STORE</p>
-            <img id="gambar-qris" src="https://drive.google.com/uc?export=view&id=1LkkjYoIP_Iy_LQx4KEm8TtXiI5q57IfJ" style="width:100%; max-width:200px; height:auto;">
-        </div>
+            <div id="qris-display" style="display:none; background:white; padding:15px; border-radius:15px; margin: 15px 0;">
+                <p style="color:black; font-weight:800; margin-bottom:10px; font-size:12px;">SCAN QRIS XZYO STORE</p>
+                <img id="gambar-qris" src="https://drive.google.com/uc?export=view&id=1LkkjYoIP_Iy_LQx4KEm8TtXiI5q57IfJ" style="width:100%; max-width:200px; height:auto;">
+            </div>
 
-        <p style="font-size:12px; color:#8b949e;">Silakan transfer sesuai nominal, lalu tunggu admin memproses pesananmu.</p>
+            <p style="font-size:12px; color:#8b949e;">Silakan transfer sesuai nominal, lalu tunggu admin memproses pesananmu.</p>
+        </div>
     </div>
-</div>
 
     <div id="slide-3" class="slide">
         <div class="card text-center">
@@ -116,7 +124,4 @@
 
 <script src="script.js"></script>
 </body>
-
 </html>
-
-
