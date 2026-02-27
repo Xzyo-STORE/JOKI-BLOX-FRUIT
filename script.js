@@ -25,33 +25,32 @@ const MENU_JOKI = [
 
     // --- BOUNTY ---
     { n: "🏴‍☠️ JOKI BOUNTY / HONOR", p: 0, header: true },
-    { n: "✦ 1M Bounty / Honor", p: 20000 },
-    { n: "✦ 5M Bounty / Honor", p: 90000 },
-    { n: "✦ 10M Bounty / Honor", p: 180000 },
-    { n: "✦ 30M Bounty (MAX)", p: 0 },
+    { n: "✦ 1M Bounty / Honor", p: 25000 },
+    { n: "✦ 5M Bounty / Honor", p: 100000 },
+    { n: "✦ 10M Bounty / Honor", p: 225000 },
+    { n: "✦ 30M Bounty (MAX)", p: 700000 },
 
-    // --- CURRENCY ---
+    // --- CURRENCY --- 
     { n: "💸 JOKI BELLY & FRAGMENT", p: 0, header: true },
-    { n: "✦ Belly 1M - 10M", p: 5000 },
-    { n: "✦ Belly 50M (Paket Sultan)", p: 0 },
-    { n: "✦ Fragment 1K - 10K", p: 1000 },
-    { n: "✦ Fragment 50K (Full Awakening Ready)", p: 0 },
+    { n: "✦ Belly 1M", p: 5000 },
+    { n: "✦ Belly 5M", p: 20000 },
+    { n: "✦ Fragment 1K", p: 1000 },
+    { n: "✦ Fragment 20K", p: 20000 },
 
     // --- LEVEL ---
     { n: "🔥 JOKI LEVEL & SEA", p: 0, header: true },
     { n: "✦ Level 1 – 700 (Sea 1)", p: 15000 },
     { n: "✦ Level 700 – 1500 (Sea 2)", p: 15000 },
-    { n: "✦ Level 1500 – MAX (Sea 3)", p: 20000 },
-    { n: "✦ Paket Level 1 - MAX", p: 0 },
+    { n: "✦ Lexvel 1500 – MAX (Sea 3)", p: 20000 },
+    { n: "✦ Paket Level 1 - MAX(Bonus GH)", p: 100000 },
     { n: "✦ Unlock Sea 2 / 3", p: 5000 },
 
     // --- FIGHTING STYLE ---
     { n: "👊 FIGHTING STYLE (MELEE)", p: 0, header: true },
-    { n: "✦ Sanguine Art (Full)", p: 0 },
     { n: "✦ God Human (Full)", p: 30000 },
-    { n: "✦ Superhuman / Death Step", p: 0 },
-    { n: "✦ Sharkman Karate / Dragon Talon", p: 0 },
-    { n: "✦ Electric Claw", p: 0 },
+    { n: "✦ Superhuman", p: 15000 },
+    { n: "✦ Sharkman Karate / Electric Claw", p: 5000 },
+    { n: "✦ Death Step", p: 5000 },
 
     // --- WEAPONS & BOSS ---
     { n: "⚔️ BOSS • WEAPON • EXCLUSIVE", p: 0, header: true },
@@ -61,39 +60,44 @@ const MENU_JOKI = [
     { n: "✦ Shark Anchor (Full)", p: 30000 },
     { n: "✦ Fox Lamp (Kitsune)", p: 30000 },
     { n: "✦ Tushita / Yama", p: 8000 },
-    { n: "✦ Hallow Scythe / Dark Dagger", p: 15000 },
+    { n: "✦ Hallow Scythe", p: 15000 },
+    { n: "✦ Dark Dagger", p: 25000 },
     { n: "✦ Rip Indra / Dough King / DB", p: 10000 },
-    { n: "✦ Saber / Rengoku / Koko", p: 5000 },
+    { n: "✦ Koko", p: 10000 },
+    { n: "✦ Saber / Rengoku", p: 5000 },
 
     // --- RAID & MASTERY ---
-    { n: "💥 RAID & MASTERY SERVICE", p: 0, header: true },
+    { n: "💥 AWEKENING FRUIT & MASTERY", p: 0, header: true },
     { n: "✦ Mastery Fruit/Sword/FS (per 100)", p: 5000 },
-    { n: "✦ Mastery Max (600 Mastery)", p: 0 },
-    { n: "✦ Raid Biasa (Max Awakening)", p: 5000 },
-    { n: "✦ Raid Buddha / Dough (Max)", p: 10000 },
-    { n: "✦ Unlock Phoenix Raid Quest", p: 0 },
+    { n: "✦ Mastery Max (600 Mastery)", p: 25000 },
+    { n: "✦ Awekening Fruit biasa(Full)", p: 10000 },
+    { n: "✦ Awekening Phoenix / Buddha / Dough (Full)", p: 10000 },
 
     // --- RACE & V4 ---
-    { n: "🧬 RACE SERVICE (V1 - V4)", p: 0, header: true },
-    { n: "✦ Unlock Ghoul / Cyborg", p: 15000 },
+    { n: "🧬 RACE EVOLUTION", p: 0, header: true },
+    { n: "✦ Unlock Cyborg", p: 15000 },
+    { n: "✦ Unlock Ghoul", p: 25000 },
     { n: "✦ Race V1 – V3 (All Race)", p: 8000 },
-    { n: "✦ Find Mirage Island (Blue Gear)", p: 10000 },
-    { n: "✦ Race V4 Unlock (Tier 1)", p: 10000 },
-    { n: "✦ Race V4 Full Tier (Tier 10)", p: 0 },
+    { n: "✦ Blue Gear(Sudah Kill DK Dan Rip Indra)", p: 10000 },
+    { n: "✦ 1x Trial", p: 10000 },
+    { n: "✦ Full Gear", p: 30000 },
+    { n: "✦ True Gear(All Race)", p: 10000 },
 
     // --- DRACO (PREMIUM) ---
     { n: "🔱 RACE DRACO (PREMIUM)", p: 0, header: true },
-    { n: "✦ Draco (Full)", p: 20000 },
+    { n: "✦ Unlock Draco", p: 20000 },
     { n: "✦ Draco V1 – V3", p: 10000 },
-    { n: "✦ Draco V4 (Full Gear)", p: 15000 },
+    { n: "✦ 1x Trial Draco", p: 15000 },
+    { n: "✦ Full Gear Draco", p: 40000 },
 
     // --- SEA EVENTS & MATERIALS ---
     { n: "🌋 SEA EVENTS & MATERIALS", p: 0, header: true },
     { n: "✦ Leviathan Heart / Scale", p: 45000 },
-    { n: "✦ Terror Shark Hunt (Eyes/Tooth)", p: 0 },
-    { n: "✦ Azure Ember Farming (Kitsune)", p: 0 },
-    { n: "✦ Kitsune Mask / Ribbon", p: 0 },
-    { n: "✦ Bones / Ectoplasm Farming", p: 0 },
+    { n: "✦ Unlock V4 Draco(Freze Hydra)", p: 45000 },
+    { n: "✦ Terror Shark Hunt (Eyes/Tooth)x1", p: 5000 },
+    { n: "✦ Blaze Ember (99x)", p: 10000 },
+    { n: "✦ Kitsune Mask / Ribbon", p: 10000 },
+    { n: "✦ Bones / Ectoplasm Farming(100x)", p: 10000 },
     { n: "✦ Dragon Heart / Storm", p: 20000 },
     { n: "✦ TOTS (Tyrant Of The Sky)", p: 5000 }
 ];
@@ -264,3 +268,4 @@ document.getElementById('togglePassword').onclick = function() {
 };
 
 window.onload = init;
+
