@@ -192,22 +192,30 @@ async function prosesPesanan() {
             const qrisBox = document.getElementById('qris-display');
             const infoTeks = document.getElementById('payMethodInfo');
             
-            // LINK QRIS ASLI KAMU
             const linkQRIS = "https://drive.google.com/uc?export=view&id=1LkkjYoIP_Iy_LQx4KEm8TtXiI5q57IfJ";
 
+            // LOGIKA PEMBAGIAN NOMOR & METODE
             if (selectedPay === "QRIS") {
                 infoTeks.innerText = "SCAN QRIS XZYO STORE";
                 qrisBox.innerHTML = `<p style="color:black; font-weight:800; margin-bottom:10px; font-size:12px;">SCAN QRIS XZYO STORE</p>
                                      <img src="${linkQRIS}" id="gambar-qris" style="width:100%; max-width:200px; height:auto; display:block; margin:0 auto; border-radius:10px;">`;
-                qrisBox.classList.add('show-qr'); // Pakai class dari CSS tadi
+                qrisBox.classList.add('show-qr');
             } 
             else {
                 qrisBox.classList.remove('show-qr');
-                qrisBox.innerHTML = "";
+                qrisBox.innerHTML = ""; 
+
                 if (selectedPay === "DANA") {
+                    // Nomor khusus DANA
                     infoTeks.innerText = "DANA: 089677323404 (A/N REZA)";
-                } else {
-                    infoTeks.innerText = selectedPay + ": 089517154561 (A/N REZA)";
+                } 
+                else if (selectedPay === "OVO") {
+                    // OVO (Nomor sama dengan Gopay)
+                    infoTeks.innerText = "OVO: 089517154561 (A/N REZA)";
+                } 
+                else if (selectedPay === "GOPAY") {
+                    // GOPAY (Nomor sama dengan Ovo)
+                    infoTeks.innerText = "GOPAY: 089517154561 (A/N REZA)";
                 }
             }
         }, 1200);
@@ -256,3 +264,4 @@ document.getElementById('togglePassword').onclick = function() {
 };
 
 window.onload = init;
+
