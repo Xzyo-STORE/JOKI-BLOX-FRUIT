@@ -88,7 +88,6 @@ const MENU_JOKI = [
 let cart = {}; 
 let selectedPay = "", currentTid = "", discount = 0;
 
-// 1. Inisialisasi Tampilan
 function init() {
     const box = document.getElementById('joki-list');
     box.innerHTML = ""; 
@@ -112,7 +111,6 @@ function init() {
     });
 }
 
-// 2. Logika Keranjang
 function updateCart(index, delta) {
     if (!cart[index]) cart[index] = 0;
     cart[index] += delta;
@@ -125,7 +123,6 @@ function updateCart(index, delta) {
     hitung();
 }
 
-// 3. Hitung Total & Voucher
 function hitung() {
     let txt = ""; let subtotal = 0;
     MENU_JOKI.forEach((item, index) => {
@@ -142,11 +139,7 @@ function hitung() {
 
 function applyVoucher() {
     const code = document.getElementById('vouchCode').value.toUpperCase();
-    const daftarVoucher = { "R3Z4": 0.20, 
-                           "RAF4": 0.15, 
-                           "F4HR1": 0.15, 
-                           "FEB2026": 0.15 };
-    
+    const daftarVoucher = { "R3Z4": 0.20, "RAF4": 0.15, "F4HR1": 0.15, "FEB2026": 0.15 };
     if (daftarVoucher[code] !== undefined) {
         discount = daftarVoucher[code];
         alert(`✅ Voucher Berhasil! Diskon ${discount * 100}%`);
@@ -157,7 +150,6 @@ function applyVoucher() {
     hitung();
 }
 
-// 4. Pembayaran & Tombol
 function selectPay(m, el) {
     selectedPay = m;
     document.querySelectorAll('.pay-bar').forEach(p => p.classList.remove('selected'));
@@ -171,7 +163,7 @@ function updateBtn() {
     document.getElementById('btnGas').disabled = !(u && hasItems && selectedPay);
 }
 
-// 5. Proses Pesanan (Langsung ke Firebase & FormSubmit)
+// 5. Proses Pesanan
 async function prosesPesanan() {
     const loader = document.getElementById('loading-overlay');
     loader.style.display = 'flex';
@@ -200,19 +192,18 @@ async function prosesPesanan() {
             const qrisBox = document.getElementById('qris-display');
             const infoTeks = document.getElementById('payMethodInfo');
             
-            // Link gambar alternatif (sudah dikonversi ke direct link)
-            const linkQRIS = "https://lh3.googleusercontent.com/d/1LkkjYoIP_Iy_LQx4KEm8TtXiI5q57IfJ";
+            // LINK QRIS ASLI KAMU
+            const linkQRIS = "https://drive.google.com/uc?export=view&id=1LkkjYoIP_Iy_LQx4KEm8TtXiI5q57IfJ";
 
             if (selectedPay === "QRIS") {
                 infoTeks.innerText = "SCAN QRIS XZYO STORE";
-                // PAKSA ISI HTML-NYA BIAR MUNCUL
                 qrisBox.innerHTML = `<p style="color:black; font-weight:800; margin-bottom:10px; font-size:12px;">SCAN QRIS XZYO STORE</p>
-                                     <img src="${linkQRIS}" style="width:100%; max-width:200px; height:auto; display:block; margin:0 auto; border:2px solid #eee; border-radius:10px;">`;
-                qrisBox.style.display = "block";
+                                     <img src="${linkQRIS}" id="gambar-qris" style="width:100%; max-width:200px; height:auto; display:block; margin:0 auto; border-radius:10px;">`;
+                qrisBox.classList.add('show-qr'); // Pakai class dari CSS tadi
             } 
             else {
-                qrisBox.style.display = "none";
-                qrisBox.innerHTML = ""; // Kosongkan kalau bukan QRIS
+                qrisBox.classList.remove('show-qr');
+                qrisBox.innerHTML = "";
                 if (selectedPay === "DANA") {
                     infoTeks.innerText = "DANA: 089677323404 (A/N REZA)";
                 } else {
@@ -258,7 +249,6 @@ function switchSlide(from, to) {
     setTimeout(() => { document.getElementById('slide-' + to).classList.add('active'); }, 100);
 }
 
-// Toggle Mata Password
 document.getElementById('togglePassword').onclick = function() {
     const p = document.getElementById('passRoblox');
     p.type = p.type === 'password' ? 'text' : 'password';
@@ -266,5 +256,3 @@ document.getElementById('togglePassword').onclick = function() {
 };
 
 window.onload = init;
-
-
