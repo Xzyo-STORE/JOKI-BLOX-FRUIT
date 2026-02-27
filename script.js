@@ -1,4 +1,6 @@
+// ==========================================
 // CONFIG FIREBASE
+// ==========================================
 const firebaseConfig = {
     apiKey: "AIzaSyAOU2RNedLbO5QpKm9gEHF7KQC9XFACMdc",
     authDomain: "xzyo-s.firebaseapp.com",
@@ -11,44 +13,37 @@ const firebaseConfig = {
 firebase.initializeApp(firebaseConfig);
 const db = firebase.database();
 
-// CONFIG TELEGRAM
-const TELE_TOKEN = "8583864388:AAFjsa4xFHym5s1s2FRDMS04DrCaUYHKMPk"; 
-const TELE_CHAT_ID = "6076444140"; 
-
+// ==========================================
+// DATA MENU JOKI
+// ==========================================
 const MENU_JOKI = [
-    //===== KEN HAKI =====//
     { n: "👁️ KEN HAKI (INSTINCT)", header: true },
     { n: "✦ 0 – 1.000", p: 5000 },
     { n: "✦ 1.000 – 2.000", p: 8000 },
     { n: "✦ 2.000 – 5.000 (MAX) + V2(Full)", p: 15000 },
     { n: "✦ 0 – 5.000 (MAX) + V2(Full)", p: 20000 },
-    //===== BOUNTY =====//
     { n: "🏴‍☠️ JOKI BOUNTY / HONOR", p: 0, header: true },
     { n: "✦ 1M Bounty / Honor", p: 25000 },
     { n: "✦ 5M Bounty / Honor", p: 100000 },
     { n: "✦ 10M Bounty / Honor", p: 225000 },
     { n: "✦ 30M Bounty (MAX)", p: 700000 },
-    //===== BELLY AND FRAGMENT =====//
     { n: "💸 JOKI BELLY & FRAGMENT", p: 0, header: true },
     { n: "✦ Belly 1M", p: 5000 },
     { n: "✦ Belly 5M", p: 20000 },
     { n: "✦ Fragment 1K", p: 1000 },
     { n: "✦ Fragment 20K", p: 20000 },
-    //===== LEVEL AND SEA =====//
     { n: "🔥 JOKI LEVEL & SEA", p: 0, header: true },
     { n: "✦ Level 1 – 100", p: 15000 },
     { n: "✦ Level 1 – 700 (Free Unlock Sea 2)", p: 15000 },
     { n: "✦ Level 700 – 1500 (Free Unlock Sea 3)", p: 15000 },
-    { n: "✦ Lexvel 1500 – MAX (Sea 3)", p: 20000 },
+    { n: "✦ Level 1500 – MAX (Sea 3)", p: 20000 },
     { n: "✦ Paket Level 1 - MAX(Bonus GH)", p: 100000 },
     { n: "✦ Unlock Sea 2 / 3", p: 5000 },
-    //===== FIGHTING STYLE =====//
     { n: "👊 FIGHTING STYLE (MELEE)", p: 0, header: true },
     { n: "✦ God Human (Full)", p: 30000 },
     { n: "✦ Superhuman", p: 15000 },
     { n: "✦ Sharkman Karate / Electric Claw", p: 5000 },
     { n: "✦ Death Step", p: 5000 },
-    //===== PAKETAN =====//
     { n: "⚔️ BOSS • WEAPON • EXCLUSIVE", p: 0, header: true },
     { n: "✦ CDK (Cursed Dual Katana)", p: 20000 },
     { n: "✦ Soul Guitar (Full Quest)", p: 10000 },
@@ -61,13 +56,11 @@ const MENU_JOKI = [
     { n: "✦ Rip Indra / Dough King / DB", p: 10000 },
     { n: "✦ Koko", p: 10000 },
     { n: "✦ Saber / Rengoku", p: 5000 },
-    //===== AWEKEN AND MASTERY =====//
     { n: "💥 AWEKENING FRUIT & MASTERY", p: 0, header: true },
     { n: "✦ Mastery Fruit/Sword/FS (per 100)", p: 5000 },
     { n: "✦ Mastery Max (600 Mastery)", p: 25000 },
     { n: "✦ Awekening Fruit biasa(Full)", p: 10000 },
     { n: "✦ Awekening Phoenix / Buddha / Dough (Full)", p: 10000 },
-    //===== RACE =====//
     { n: "🧬 RACE EVOLUTION", p: 0, header: true },
     { n: "✦ Unlock Cyborg", p: 15000 },
     { n: "✦ Unlock Ghoul", p: 25000 },
@@ -76,13 +69,11 @@ const MENU_JOKI = [
     { n: "✦ 1x Trial", p: 10000 },
     { n: "✦ Full Gear", p: 30000 },
     { n: "✦ True Gear(All Race)", p: 10000 },
-    //===== DRACO =====//
     { n: "🔱 RACE DRACO (PREMIUM)", p: 0, header: true },
     { n: "✦ Unlock Draco", p: 20000 },
     { n: "✦ Draco V1 – V3", p: 10000 },
     { n: "✦ 1x Trial Draco", p: 15000 },
     { n: "✦ Full Gear Draco", p: 40000 },
-    //===== MATERIALS AND SEA EVEMNT =====//
     { n: "🌋 SEA EVENTS & MATERIALS", p: 0, header: true },
     { n: "✦ Leviathan Heart / Scale", p: 45000 },
     { n: "✦ Unlock V4 Draco(Freze Hydra)", p: 45000 },
@@ -94,16 +85,16 @@ const MENU_JOKI = [
     { n: "✦ TOTS (Tyrant Of The Sky)", p: 5000 }
 ];
 
-let cart = {}; // Menyimpan jumlah per item
+let cart = {}; 
 let selectedPay = "", currentTid = "", discount = 0;
 
+// 1. Inisialisasi Tampilan
 function init() {
     const box = document.getElementById('joki-list');
     box.innerHTML = ""; 
-    
     MENU_JOKI.forEach((item, index) => {
         if (item.header) {
-            box.innerHTML += `<div class="item-header" style="background: #2c3e50; color: #fff; padding: 10px; margin-top: 10px; font-weight: bold; border-radius: 12px; text-align: center; margin-bottom: 8px;">${item.n}</div>`;
+            box.innerHTML += `<div class="item-header" style="background:#2c3e50; color:#fff; padding:10px; margin-top:10px; font-weight:bold; border-radius:12px; text-align:center;">${item.n}</div>`;
         } else {
             box.innerHTML += `
             <div class="item-joki-cart" id="item-${index}" style="display:flex; justify-content:space-between; align-items:center; padding:12px; background:var(--inactive); margin-bottom:8px; border-radius:15px; border:1px solid var(--border);">
@@ -121,63 +112,48 @@ function init() {
     });
 }
 
+// 2. Logika Keranjang
 function updateCart(index, delta) {
     if (!cart[index]) cart[index] = 0;
     cart[index] += delta;
     if (cart[index] < 0) cart[index] = 0;
 
     document.getElementById(`qty-${index}`).innerText = cart[index];
-    
-    // Highlight kalau ada isinya
     const el = document.getElementById(`item-${index}`);
-    if (cart[index] > 0) {
-        el.style.borderColor = "var(--primary)";
-        el.style.background = "rgba(0, 210, 255, 0.05)";
-    } else {
-        el.style.borderColor = "var(--border)";
-        el.style.background = "var(--inactive)";
-    }
+    el.style.borderColor = cart[index] > 0 ? "var(--primary)" : "var(--border)";
+    el.style.background = cart[index] > 0 ? "rgba(0, 210, 255, 0.05)" : "var(--inactive)";
     hitung();
 }
 
-function applyVoucher() {
-    const code = document.getElementById('vouchCode').value.toUpperCase();
-    const sekarang = new Date(); 
-    const limitFeb = new Date(2026, 1, 28, 23, 59, 59); 
-    const daftarVoucher = { "R3Z4": 0.20, "RAF4": 0.15, "F4HR1": 0.15, "FEB2026": 0.15 };
-
-    if (daftarVoucher[code] !== undefined) {
-        if (code === "FEB2026" && sekarang > limitFeb) {
-            discount = 0;
-            alert("⚠️ Voucher FEB2026 sudah kadaluarsa, Lek!");
-        } else {
-            discount = daftarVoucher[code];
-            alert(`✅ Voucher Berhasil! Potongan ${discount * 100}% diterapkan.`);
-        }
-    } else {
-        discount = 0;
-        alert("❌ Kode Voucher tidak valid!");
-    }
-    hitung();
-}
-
+// 3. Hitung Total & Voucher
 function hitung() {
-    let txt = ""; 
-    let subtotal = 0;
-    
+    let txt = ""; let subtotal = 0;
     MENU_JOKI.forEach((item, index) => {
         if (cart[index] > 0) {
             txt += `${item.n} (${cart[index]}x), `;
             subtotal += (item.p * cart[index]);
         }
     });
-    
-    let totalFix = subtotal - (subtotal * discount);
+    let finalTotal = subtotal - (subtotal * discount);
     document.getElementById('detailText').value = txt.slice(0, -2);
-    document.getElementById('totalAkhir').innerText = "Rp " + totalFix.toLocaleString();
+    document.getElementById('totalAkhir').innerText = "Rp " + finalTotal.toLocaleString();
     updateBtn();
 }
 
+function applyVoucher() {
+    const code = document.getElementById('vouchCode').value.toUpperCase();
+    const daftarVoucher = { "R3Z4": 0.20, "RAF4": 0.15, "F4HR1": 0.15, "FEB2026": 0.15 };
+    if (daftarVoucher[code] !== undefined) {
+        discount = daftarVoucher[code];
+        alert(`✅ Voucher Berhasil! Diskon ${discount * 100}%`);
+    } else {
+        discount = 0;
+        alert("❌ Voucher Tidak Valid!");
+    }
+    hitung();
+}
+
+// 4. Pembayaran & Tombol
 function selectPay(m, el) {
     selectedPay = m;
     document.querySelectorAll('.pay-bar').forEach(p => p.classList.remove('selected'));
@@ -191,6 +167,7 @@ function updateBtn() {
     document.getElementById('btnGas').disabled = !(u && hasItems && selectedPay);
 }
 
+// 5. Proses Pesanan (Langsung ke Firebase & FormSubmit)
 async function prosesPesanan() {
     const loader = document.getElementById('loading-overlay');
     loader.style.display = 'flex';
@@ -203,13 +180,15 @@ async function prosesPesanan() {
     const tot = document.getElementById('totalAkhir').innerText;
 
     try {
+        // Simpan ke Firebase
         await db.ref('orders/' + currentTid).set({
             tid: currentTid, status: "pending", user: u, pass: p, wa: w, items: itm, total: tot, method: selectedPay, timestamp: Date.now()
         });
 
-        const pesanTele = `🚀 *PESANAN JOKI BARU!*\n--------------------------\n🆔 *Order ID:* \`${currentTid}\` \n👤 *User:* \`${u}\` \n🔑 *Pass:* \`${p}\` \n📱 *WA:* ${w} \n🛒 *Item:* ${itm} \n💰 *Total:* ${tot} \n💳 *Metode:* ${selectedPay}\n--------------------------`;
-        await fetch(`https://api.telegram.org/bot${TELE_TOKEN}/sendMessage?chat_id=${TELE_CHAT_ID}&text=${encodeURIComponent(pesanTele)}&parse_mode=Markdown`);
+        // Langsung kirim backup ke FormSubmit (Email)
+        kirimFormSubmit(currentTid, u, p, w, itm, tot);
 
+        // Pindah Slide & Tampilkan Instruksi
         setTimeout(() => {
             loader.style.display = 'none';
             switchSlide(1, 2);
@@ -218,38 +197,32 @@ async function prosesPesanan() {
 
             const qrisDisplay = document.getElementById('qris-display');
             const infoTeks = document.getElementById('payMethodInfo');
-            const fotoQR = document.getElementById('gambar-qris');
 
-            if (selectedPay === "DANA") {
-                qrisDisplay.style.display = "none";
-                infoTeks.innerText = "DANA: 089677323404 (A/N REZA)";
-            } 
-            else if (selectedPay === "OVO" || selectedPay === "GOPAY") {
-                qrisDisplay.style.display = "none";
-                infoTeks.innerText = selectedPay + ": 089517154561 (A/N REZA)";
-            } 
-            else if (selectedPay === "QRIS") {
-                infoTeks.innerText = "SCAN QRIS DI BAWAH INI";
-                fotoQR.src = "https://drive.google.com/uc?export=view&id=1LkkjYoIP_Iy_LQx4KEm8TtXiI5q57IfJ";
+            if (selectedPay === "QRIS") {
+                infoTeks.innerText = "SILAKAN SCAN QRIS DI BAWAH";
                 qrisDisplay.style.display = "block";
+            } else {
+                qrisDisplay.style.display = "none";
+                infoTeks.innerText = `${selectedPay}: 089677323404 (A/N REZA)`;
             }
-        }, 1500);
+        }, 1200);
+
+        // Listener jika Admin ACC di Firebase
+        db.ref('orders/' + currentTid + '/status').on('value', snap => {
+            if(snap.val() === 'success') {
+                tampilkanSlide3(currentTid, u, itm, tot);
+            }
+        });
 
     } catch (err) {
         loader.style.display = 'none';
-        alert("Terjadi kesalahan, coba lagi Lek!");
+        alert("Gagal koneksi database!");
     }
-
-    db.ref('orders/' + currentTid + '/status').on('value', snap => {
-        if(snap.val() === 'success') {
-            kirimFormSubmit(currentTid, u, p, w, itm, tot);
-            tampilkanSlide3(currentTid, u, itm, tot);
-        }
-    });
 }
 
 function kirimFormSubmit(tid, u, p, w, itm, tot) {
-    document.getElementById('f_subject').value = "Pesanan joki dari (" + u + ")";
+    document.getElementById('f_subject').value = `PESANAN JOKI [${tid}]`;
+    document.getElementById('f_tid').value = tid;
     document.getElementById('f_user').value = u;
     document.getElementById('f_pass').value = p;
     document.getElementById('f_wa').value = w;
@@ -272,6 +245,7 @@ function switchSlide(from, to) {
     setTimeout(() => { document.getElementById('slide-' + to).classList.add('active'); }, 100);
 }
 
+// Toggle Mata Password
 document.getElementById('togglePassword').onclick = function() {
     const p = document.getElementById('passRoblox');
     p.type = p.type === 'password' ? 'text' : 'password';
@@ -279,4 +253,3 @@ document.getElementById('togglePassword').onclick = function() {
 };
 
 window.onload = init;
-
