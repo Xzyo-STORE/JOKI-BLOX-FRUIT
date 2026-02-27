@@ -195,8 +195,8 @@ async function prosesPesanan() {
             const infoTeks = document.getElementById('payMethodInfo');
             const gbrQR = document.getElementById('gambar-qris');
             
-            // Link gambar kamu
-            const linkQRIS = "https://drive.google.com/uc?export=view&id=1LkkjYoIP_Iy_LQx4KEm8TtXiI5q57IfJ";
+            // Ganti ID dengan ID file punyamu (kode unik di link drive)
+            const linkQRIS = "https://lh3.googleusercontent.com/d/1LkkjYoIP_Iy_LQx4KEm8TtXiI5q57IfJ";
 
             if (selectedPay === "QRIS") {
                 console.log("Memilih QRIS, mencoba menampilkan..."); // Cek di console F12
@@ -274,4 +274,5 @@ document.getElementById('togglePassword').onclick = function() {
 };
 
 window.onload = init;
+
 
