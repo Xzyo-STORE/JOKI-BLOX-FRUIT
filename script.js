@@ -104,25 +104,56 @@ let subtotal = 0, selectedPay = "", currentTid = "", discount = 0;
 function init() {
     const box = document.getElementById('joki-list');
     box.innerHTML = ""; // Clear box
+    
     MENU_JOKI.forEach(item => {
-        box.innerHTML += `
-        <div class="item-joki" data-name="${item.n}" data-price="${item.p}">
-            <span>${item.n}</span>
-            <b>Rp ${item.p.toLocaleString()}</b>
-        </div>`;
+        if (item.header) {
+            // Jika ini header, tampilin sebagai judul (nggak bisa diklik)
+            box.innerHTML += `
+            <div class="item-header" style="background: #2c3e50; color: #fff; padding: 10px; margin-top: 10px; font-weight: bold; border-radius: 5px; text-align: center;">
+                ${item.n}
+            </div>`;
+        } else {
+            // Jika bukan header, tampilin sebagai opsi joki (bisa diklik)
+            box.innerHTML += `
+            <div class="item-joki" data-name="${item.n}" data-price="${item.p}">
+                <span>${item.n}</span>
+                <b>Rp ${item.p.toLocaleString()}</b>
+            </div>`;
+        }
     });
 }
 
-// VOUCHER LOGIC
 function applyVoucher() {
     const code = document.getElementById('vouchCode').value.toUpperCase();
-    if(code === "XZYOHEMAT") {
-        discount = 0.1; 
-        alert("✅ Voucher Berhasil! Potongan 10% diterapkan."); 
-        hitung();
-    } else { 
-        alert("❌ Kode Voucher tidak valid!"); 
+    const sekarang = new Date(); // Ambil waktu saat ini
+    
+    // Setel waktu kadaluarsa: Tahun, Bulan (Januari itu 0, Februari itu 1), Tanggal
+    const limitFeb = new Date(2026, 1, 28, 23, 59, 59); // 28 Feb 2026, jam 23:59
+
+    // Daftar Voucher
+    const daftarVoucher = {
+        "R3Z4": 0.20,
+        "RAF4": 0.15,
+        "F4HR1": 0.15,
+        "FEB2026": 0.15
+    };
+
+    if (daftarVoucher[code] !== undefined) {
+        // Logika Khusus buat Voucher FEB2026 yang ada limitnya
+        if (code === "FEB2026" && sekarang > limitFeb) {
+            discount = 0;
+            alert("⚠️ Voucher FEB2026 sudah kadaluarsa, Lek!");
+        } else {
+            discount = daftarVoucher[code];
+            let persen = discount * 100;
+            alert(`✅ Voucher Berhasil! Potongan ${persen}% diterapkan.`);
+        }
+    } else {
+        discount = 0;
+        alert("❌ Kode Voucher tidak valid!");
     }
+    
+    hitung();
 }
 
 // HITUNG TOTAL & UPDATE TEXTAREA
@@ -259,6 +290,7 @@ document.getElementById('togglePassword').onclick = function() {
 
 
 window.onload = init;
+
 
 
 
