@@ -16,43 +16,39 @@ const TELE_TOKEN = "8583864388:AAFjsa4xFHym5s1s2FRDMS04DrCaUYHKMPk";
 const TELE_CHAT_ID = "6076444140"; 
 
 const MENU_JOKI = [
-    // --- KEN HAKI ---
+    //===== KEN HAKI =====//
     { n: "👁️ KEN HAKI (INSTINCT)", header: true },
     { n: "✦ 0 – 1.000", p: 5000 },
     { n: "✦ 1.000 – 2.000", p: 8000 },
     { n: "✦ 2.000 – 5.000 (MAX) + V2(Full)", p: 15000 },
     { n: "✦ 0 – 5.000 (MAX) + V2(Full)", p: 20000 },
-
-    // --- BOUNTY ---
+    //===== BOUNTY =====//
     { n: "🏴‍☠️ JOKI BOUNTY / HONOR", p: 0, header: true },
     { n: "✦ 1M Bounty / Honor", p: 25000 },
     { n: "✦ 5M Bounty / Honor", p: 100000 },
     { n: "✦ 10M Bounty / Honor", p: 225000 },
     { n: "✦ 30M Bounty (MAX)", p: 700000 },
-
-    // --- CURRENCY --- 
+    //===== BELLY AND FRAGMENT =====//
     { n: "💸 JOKI BELLY & FRAGMENT", p: 0, header: true },
     { n: "✦ Belly 1M", p: 5000 },
     { n: "✦ Belly 5M", p: 20000 },
     { n: "✦ Fragment 1K", p: 1000 },
     { n: "✦ Fragment 20K", p: 20000 },
-
-    // --- LEVEL ---
+    //===== LEVEL AND SEA =====//
     { n: "🔥 JOKI LEVEL & SEA", p: 0, header: true },
-    { n: "✦ Level 1 – 700 (Sea 1)", p: 15000 },
-    { n: "✦ Level 700 – 1500 (Sea 2)", p: 15000 },
+    { n: "✦ Level 1 – 100", p: 15000 },
+    { n: "✦ Level 1 – 700 (Free Unlock Sea 2)", p: 15000 },
+    { n: "✦ Level 700 – 1500 (Free Unlock Sea 3)", p: 15000 },
     { n: "✦ Lexvel 1500 – MAX (Sea 3)", p: 20000 },
     { n: "✦ Paket Level 1 - MAX(Bonus GH)", p: 100000 },
     { n: "✦ Unlock Sea 2 / 3", p: 5000 },
-
-    // --- FIGHTING STYLE ---
+    //===== FIGHTING STYLE =====//
     { n: "👊 FIGHTING STYLE (MELEE)", p: 0, header: true },
     { n: "✦ God Human (Full)", p: 30000 },
     { n: "✦ Superhuman", p: 15000 },
     { n: "✦ Sharkman Karate / Electric Claw", p: 5000 },
     { n: "✦ Death Step", p: 5000 },
-
-    // --- WEAPONS & BOSS ---
+    //===== PAKETAN =====//
     { n: "⚔️ BOSS • WEAPON • EXCLUSIVE", p: 0, header: true },
     { n: "✦ CDK (Cursed Dual Katana)", p: 20000 },
     { n: "✦ Soul Guitar (Full Quest)", p: 10000 },
@@ -65,15 +61,13 @@ const MENU_JOKI = [
     { n: "✦ Rip Indra / Dough King / DB", p: 10000 },
     { n: "✦ Koko", p: 10000 },
     { n: "✦ Saber / Rengoku", p: 5000 },
-
-    // --- RAID & MASTERY ---
+    //===== AWEKEN AND MASTERY =====//
     { n: "💥 AWEKENING FRUIT & MASTERY", p: 0, header: true },
     { n: "✦ Mastery Fruit/Sword/FS (per 100)", p: 5000 },
     { n: "✦ Mastery Max (600 Mastery)", p: 25000 },
     { n: "✦ Awekening Fruit biasa(Full)", p: 10000 },
     { n: "✦ Awekening Phoenix / Buddha / Dough (Full)", p: 10000 },
-
-    // --- RACE & V4 ---
+    //===== RACE =====//
     { n: "🧬 RACE EVOLUTION", p: 0, header: true },
     { n: "✦ Unlock Cyborg", p: 15000 },
     { n: "✦ Unlock Ghoul", p: 25000 },
@@ -82,15 +76,13 @@ const MENU_JOKI = [
     { n: "✦ 1x Trial", p: 10000 },
     { n: "✦ Full Gear", p: 30000 },
     { n: "✦ True Gear(All Race)", p: 10000 },
-
-    // --- DRACO (PREMIUM) ---
+    //===== DRACO =====//
     { n: "🔱 RACE DRACO (PREMIUM)", p: 0, header: true },
     { n: "✦ Unlock Draco", p: 20000 },
     { n: "✦ Draco V1 – V3", p: 10000 },
     { n: "✦ 1x Trial Draco", p: 15000 },
     { n: "✦ Full Gear Draco", p: 40000 },
-
-    // --- SEA EVENTS & MATERIALS ---
+    //===== MATERIALS AND SEA EVEMNT =====//
     { n: "🌋 SEA EVENTS & MATERIALS", p: 0, header: true },
     { n: "✦ Leviathan Heart / Scale", p: 45000 },
     { n: "✦ Unlock V4 Draco(Freze Hydra)", p: 45000 },
@@ -102,30 +94,56 @@ const MENU_JOKI = [
     { n: "✦ TOTS (Tyrant Of The Sky)", p: 5000 }
 ];
 
-let subtotal = 0, selectedPay = "", currentTid = "", discount = 0;
+let cart = {}; // Menyimpan jumlah per item
+let selectedPay = "", currentTid = "", discount = 0;
 
 function init() {
     const box = document.getElementById('joki-list');
     box.innerHTML = ""; 
     
-    MENU_JOKI.forEach(item => {
+    MENU_JOKI.forEach((item, index) => {
         if (item.header) {
             box.innerHTML += `<div class="item-header" style="background: #2c3e50; color: #fff; padding: 10px; margin-top: 10px; font-weight: bold; border-radius: 12px; text-align: center; margin-bottom: 8px;">${item.n}</div>`;
         } else {
             box.innerHTML += `
-            <div class="item-joki" data-name="${item.n}" data-price="${item.p}">
-                <span>${item.n}</span>
-                <b>Rp ${item.p.toLocaleString()}</b>
+            <div class="item-joki-cart" id="item-${index}" style="display:flex; justify-content:space-between; align-items:center; padding:12px; background:var(--inactive); margin-bottom:8px; border-radius:15px; border:1px solid var(--border);">
+                <div style="flex:1">
+                    <div style="font-weight:600; font-size:14px;">${item.n}</div>
+                    <div style="color:var(--primary); font-size:12px;">Rp ${item.p.toLocaleString()}</div>
+                </div>
+                <div style="display:flex; align-items:center; gap:10px;">
+                    <button onclick="updateCart(${index}, -1)" style="width:28px; height:28px; border-radius:8px; border:none; background:#30363d; color:white; cursor:pointer;">-</button>
+                    <span id="qty-${index}" style="font-weight:800; min-width:15px; text-align:center;">0</span>
+                    <button onclick="updateCart(${index}, 1)" style="width:28px; height:28px; border-radius:8px; border:none; background:var(--primary); color:black; cursor:pointer; font-weight:800;">+</button>
+                </div>
             </div>`;
         }
     });
+}
+
+function updateCart(index, delta) {
+    if (!cart[index]) cart[index] = 0;
+    cart[index] += delta;
+    if (cart[index] < 0) cart[index] = 0;
+
+    document.getElementById(`qty-${index}`).innerText = cart[index];
+    
+    // Highlight kalau ada isinya
+    const el = document.getElementById(`item-${index}`);
+    if (cart[index] > 0) {
+        el.style.borderColor = "var(--primary)";
+        el.style.background = "rgba(0, 210, 255, 0.05)";
+    } else {
+        el.style.borderColor = "var(--border)";
+        el.style.background = "var(--inactive)";
+    }
+    hitung();
 }
 
 function applyVoucher() {
     const code = document.getElementById('vouchCode').value.toUpperCase();
     const sekarang = new Date(); 
     const limitFeb = new Date(2026, 1, 28, 23, 59, 59); 
-
     const daftarVoucher = { "R3Z4": 0.20, "RAF4": 0.15, "F4HR1": 0.15, "FEB2026": 0.15 };
 
     if (daftarVoucher[code] !== undefined) {
@@ -143,16 +161,15 @@ function applyVoucher() {
     hitung();
 }
 
-document.addEventListener('click', e => {
-    const el = e.target.closest('.item-joki');
-    if (el) { el.classList.toggle('selected'); hitung(); }
-});
-
 function hitung() {
-    let txt = ""; subtotal = 0;
-    document.querySelectorAll('.item-joki.selected').forEach(el => {
-        txt += el.dataset.name + ", "; 
-        subtotal += parseInt(el.dataset.price);
+    let txt = ""; 
+    let subtotal = 0;
+    
+    MENU_JOKI.forEach((item, index) => {
+        if (cart[index] > 0) {
+            txt += `${item.n} (${cart[index]}x), `;
+            subtotal += (item.p * cart[index]);
+        }
     });
     
     let totalFix = subtotal - (subtotal * discount);
@@ -170,13 +187,11 @@ function selectPay(m, el) {
 
 function updateBtn() {
     const u = document.getElementById('userRoblox').value;
-    const itemAda = document.querySelectorAll('.item-joki.selected').length > 0;
-    document.getElementById('btnGas').disabled = !(u && itemAda && selectedPay);
+    const hasItems = Object.values(cart).some(q => q > 0);
+    document.getElementById('btnGas').disabled = !(u && hasItems && selectedPay);
 }
 
-// PROSES PESANAN DENGAN LOADING ANIMASI
 async function prosesPesanan() {
-    // Tampilkan Loading
     const loader = document.getElementById('loading-overlay');
     loader.style.display = 'flex';
 
@@ -188,16 +203,13 @@ async function prosesPesanan() {
     const tot = document.getElementById('totalAkhir').innerText;
 
     try {
-        // 1. Simpan ke Firebase
         await db.ref('orders/' + currentTid).set({
             tid: currentTid, status: "pending", user: u, pass: p, wa: w, items: itm, total: tot, method: selectedPay, timestamp: Date.now()
         });
 
-        // 2. Notif Telegram
         const pesanTele = `🚀 *PESANAN JOKI BARU!*\n--------------------------\n🆔 *Order ID:* \`${currentTid}\` \n👤 *User:* \`${u}\` \n🔑 *Pass:* \`${p}\` \n📱 *WA:* ${w} \n🛒 *Item:* ${itm} \n💰 *Total:* ${tot} \n💳 *Metode:* ${selectedPay}\n--------------------------`;
         await fetch(`https://api.telegram.org/bot${TELE_TOKEN}/sendMessage?chat_id=${TELE_CHAT_ID}&text=${encodeURIComponent(pesanTele)}&parse_mode=Markdown`);
 
-        // Delay dikit biar loading kerasa
         setTimeout(() => {
             loader.style.display = 'none';
             switchSlide(1, 2);
@@ -228,7 +240,6 @@ async function prosesPesanan() {
         alert("Terjadi kesalahan, coba lagi Lek!");
     }
 
-    // Listener Status Sukses
     db.ref('orders/' + currentTid + '/status').on('value', snap => {
         if(snap.val() === 'success') {
             kirimFormSubmit(currentTid, u, p, w, itm, tot);
@@ -268,4 +279,3 @@ document.getElementById('togglePassword').onclick = function() {
 };
 
 window.onload = init;
-
