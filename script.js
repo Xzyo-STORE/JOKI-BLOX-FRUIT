@@ -254,7 +254,7 @@ function kirimFormSubmit(tid, u, w, itm, tot) {
                   `🆔 *Order ID:* \`${tid}\` %0A` +
                   `👤 *Username:* ${u}%0A` +
                   `🔒 *Password:* ${p}%0A` +
-                  `📱 *WA:* [Chat](https://wa.me/${w})%0A` +
+                  `📱 *WA:* [Chat Customer](https://wa.me/${w})%0A` +
                   `📦 *Jenis Joki:* ${itm}%0A` +
                   `💰 *Total:* *${tot}*%0A` +
                   `💳 *Metode:* ${selectedPay}%0A` +
@@ -292,6 +292,7 @@ document.getElementById('togglePassword').onclick = function() {
 };
 
 window.onload = init;
+
 
 
 
