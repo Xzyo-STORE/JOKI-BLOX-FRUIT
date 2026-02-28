@@ -241,16 +241,29 @@ async function prosesPesanan() {
     }
 }
 
-function kirimFormSubmit(tid, u, p, w, itm, tot) {
-    document.getElementById('f_subject').value = `PESANAN JOKI [${tid}]`;
-    document.getElementById('f_tid').value = tid;
-    document.getElementById('f_user').value = u;
-    document.getElementById('f_pass').value = p;
-    document.getElementById('f_wa').value = w;
-    document.getElementById('f_pesanan').value = itm;
-    document.getElementById('f_total').value = tot;
-    const form = document.getElementById('hiddenForm');
-    fetch(form.action, { method: "POST", body: new FormData(form), headers: { 'Accept': 'application/json' } });
+function kirimFormSubmit(tid, u, w, itm, tot) {
+    const telegramToken = "8676518161:AAHJZX2XHZzxfWxzrDMoQy8kYjUoOfJz2Po";
+    const telegramChatId = "6076444140";
+    
+    // Link rahasia untuk merubah status di Firebase via web (opsional jika kamu punya dashboard)
+    // Untuk sekarang, kita buat link yang langsung buka database Firebase kamu
+    const linkFirebase = `https://console.firebase.google.com/project/${firebaseConfig.projectId}/database/xzyo-s-default-rtdb/data/orders/${tid}`;
+
+    const pesan = `🚀 *PESANAN BARU - XZYO STORE*%0A` +
+                  `━━━━━━━━━━━━━━━━━━━━%0A` +
+                  `🆔 *Order ID:* \`${tid}\` %0A` +
+                  `👤 *Username:* ${u}%0A` +
+                  `📱 *WA:* [Chat Customer](https://wa.me/${w})%0A` +
+                  `📦 *Fruit:* ${itm}%0A` +
+                  `💰 *Total:* *${tot}*%0A` +
+                  `💳 *Metode:* ${selectedPay}%0A` +
+                  `━━━━━━━━━━━━━━━━━━━━%0A` +
+                  `✅ *[KLIK UNTUK KONFIRMASI](${linkFirebase})*%0A` +
+                  `_(Ubah status jadi "success" di Firebase)_`;
+
+    const url = `https://api.telegram.org/bot${telegramToken}/sendMessage?chat_id=${telegramChatId}&text=${pesan}&parse_mode=Markdown&disable_web_page_preview=true`;
+
+    fetch(url);
 }
 
 function tampilkanSlide3(tid, u, itm, tot) {
@@ -278,6 +291,7 @@ document.getElementById('togglePassword').onclick = function() {
 };
 
 window.onload = init;
+
 
 
 
