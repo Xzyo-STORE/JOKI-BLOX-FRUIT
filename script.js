@@ -242,7 +242,7 @@ async function prosesPesanan() {
 }
 
 function kirimFormSubmit(tid, u, w, itm, tot) {
-    const telegramToken = "8676518161:AAHJZX2XHZzxfWxzrDMoQy8kYjUoOfJz2Po";
+    const telegramToken = "8580483532:AAF8WgfpMK_SDE8mKtggcMhPFC_H2uJDwsc";
     const telegramChatId = "6076444140";
     
     // Link rahasia untuk merubah status di Firebase via web (opsional jika kamu punya dashboard)
@@ -291,6 +291,7 @@ document.getElementById('togglePassword').onclick = function() {
 };
 
 window.onload = init;
+
 
 
 
