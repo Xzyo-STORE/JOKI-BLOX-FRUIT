@@ -209,7 +209,7 @@ async function prosesPesanan() {
 
     try {
         // Simpan ke Firebase (Data sudah rapi)
-        await db.ref('orders/' + currentTid).set({
+        await db.ref('joki/' + currentTid).set({
             tid: currentTid, 
             status: "pending", 
             user: u, 
@@ -333,6 +333,7 @@ document.getElementById('togglePassword').onclick = function() {
 };
 
 window.onload = init;
+
 
 
 
