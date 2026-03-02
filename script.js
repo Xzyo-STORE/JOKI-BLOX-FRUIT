@@ -190,23 +190,42 @@ async function prosesPesanan() {
     const loader = document.getElementById('loading-overlay');
     loader.style.display = 'flex';
 
+    // Buat Order ID Unik
     currentTid = "XZY-" + Math.floor(Math.random()*900000+100000);
-    const u = document.getElementById('userRoblox').value;
-    const p = document.getElementById('passRoblox').value;
-    const w = document.getElementById('waUser').value;
+    
+    // Ambil input dari HTML
+    const u = document.getElementById('userRoblox').value.trim();
     const itm = document.getElementById('detailText').value;
     const tot = document.getElementById('totalAkhir').innerText;
 
+    // --- LOGIKA SAKTI AUTO UBAH 0 KE 62 ---
+    let w = document.getElementById('waUser').value.trim();
+    if (w.startsWith('0')) {
+        w = '62' + w.substring(1); // Ganti 0 didepan jadi 62
+    } else if (!w.startsWith('62') && w !== "") {
+        w = '62' + w; // Tambah 62 jika belum ada
+    }
+    // --------------------------------------
+
     try {
+        // Simpan ke Firebase (Data sudah rapi)
         await db.ref('orders/' + currentTid).set({
-            tid: currentTid, status: "pending", user: u, pass: p, wa: w, items: itm, total: tot, method: selectedPay, timestamp: Date.now()
+            tid: currentTid, 
+            status: "pending", 
+            user: u, 
+            wa: w, 
+            items: itm, 
+            total: tot, 
+            method: selectedPay, 
+            timestamp: Date.now()
         });
 
-        kirimFormSubmit(currentTid, u, p, w, itm, tot);
+        // Kirim notifikasi ke Telegram Admin
+        kirimFormSubmit(currentTid, u, w, itm, tot);
 
         setTimeout(() => {
             loader.style.display = 'none';
-            switchSlide(1, 2);
+            switchSlide(1, 2); // Pindah ke halaman pembayaran
 
             document.getElementById('payNominal').innerText = tot;
             document.getElementById('displayTid').innerText = currentTid;
@@ -215,27 +234,26 @@ async function prosesPesanan() {
             const infoTeks = document.getElementById('payMethodInfo');
             const gbrQR = document.getElementById('gambar-qris');
             
-            // Ganti ID dengan ID file punyamu (kode unik di link drive)
             const linkQRIS = "https://i.ibb.co.com/Y4bRyxjc/IMG-20260227-021950.png";
 
             if (selectedPay === "QRIS") {
-                console.log("Memilih QRIS, mencoba menampilkan..."); // Cek di console F12
+                console.log("Memilih QRIS, menampilkan..."); 
                 infoTeks.innerText = "SILAKAN SCAN QRIS DI BAWAH";
                 
                 if (gbrQR) {
                     gbrQR.src = linkQRIS;
-                    console.log("Link gambar diset ke: " + gbrQR.src);
                 }
                 
                 qrisBox.classList.add('show-qr'); 
-                qrisBox.style.display = "block"; // Paksa muncul lewat JS
+                qrisBox.style.display = "block"; 
             } 
             else {
                 qrisBox.classList.remove('show-qr');
-                qrisBox.style.display = "none"; // Sembunyikan jika bukan QRIS
+                qrisBox.style.display = "none"; 
                 
+                // Info nomor tujuan pembayaran manual
                 if (selectedPay === "DANA") {
-                    infoTeks.innerText = "DANA: 089677323404";
+                    infoTeks.innerText = "DANA: 089677329404";
                 } else if (selectedPay === "OVO") {
                     infoTeks.innerText = "OVO: 089517154561";
                 } else if (selectedPay === "GOPAY") {
@@ -243,6 +261,13 @@ async function prosesPesanan() {
                 }
             }
         }, 1200);
+
+    } catch (err) {
+        loader.style.display = 'none';
+        alert("Gagal koneksi ke database! Cek koneksi internetmu.");
+        console.error(err);
+    }
+}
 
         // Listener buat update otomatis kalau admin ganti status di Firebase
         db.ref('orders/' + currentTid + '/status').on('value', snap => {
@@ -308,6 +333,7 @@ document.getElementById('togglePassword').onclick = function() {
 };
 
 window.onload = init;
+
 
 
 
