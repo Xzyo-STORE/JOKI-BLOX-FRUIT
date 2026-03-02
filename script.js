@@ -92,24 +92,28 @@ const MENU_JOKI = [
 let cart = {}; 
 let selectedPay = "", currentTid = "", discount = 0;
 
+// [BAGIAN CONFIG FIREBASE DAN MENU_JOKI TETAP SAMA SEPERTI SEBELUMNYA]
+
 function init() {
     const box = document.getElementById('joki-list');
     if (!box) return;
     box.innerHTML = ""; 
     MENU_JOKI.forEach((item, index) => {
         if (item.header) {
-            box.innerHTML += `<div class="item-header">${item.n}</div>`;
+            // Sesuai CSS kamu untuk header
+            box.innerHTML += `<div class="item-header" style="background: var(--border); color: var(--primary); padding: 10px; border-radius: 12px; margin: 15px 0 10px 0; text-align: center; font-weight: 800; font-size: 12px;">${item.n}</div>`;
         } else {
+            // STRUKTUR INI WAJIB SAMA AGAR CSS .item-joki-cart KAMU JALAN
             box.innerHTML += `
             <div class="item-joki-cart" id="item-${index}">
                 <div class="info-item">
-                    <div class="name-item">${item.n}</div>
-                    <div class="price-item">Rp ${item.p.toLocaleString()}</div>
+                    <div class="name-item" style="font-weight: 600;">${item.n}</div>
+                    <div class="price-item" style="color: var(--primary); font-size: 13px;">Rp ${item.p.toLocaleString()}</div>
                 </div>
-                <div class="action-item">
-                    <button onclick="updateCart(${index}, -1)">-</button>
-                    <span id="qty-${index}">0</span>
-                    <button onclick="updateCart(${index}, 1)">+</button>
+                <div class="action-item" style="display: flex; align-items: center; gap: 10px;">
+                    <button onclick="updateCart(${index}, -1)" style="background: var(--bg); border: 1px solid var(--border); color: white; width: 30px; height: 30px; border-radius: 8px; cursor: pointer;">-</button>
+                    <span id="qty-${index}" style="font-weight: 800; min-width: 20px; text-align: center;">0</span>
+                    <button onclick="updateCart(${index}, 1)" style="background: var(--primary); border: none; color: black; width: 30px; height: 30px; border-radius: 8px; cursor: pointer; font-weight: 800;">+</button>
                 </div>
             </div>`;
         }
@@ -120,10 +124,20 @@ function updateCart(index, delta) {
     if (!cart[index]) cart[index] = 0;
     cart[index] += delta;
     if (cart[index] < 0) cart[index] = 0;
+
     document.getElementById(`qty-${index}`).innerText = cart[index];
+    const el = document.getElementById(`item-${index}`);
+    
+    // EFEK BORDER SAAT DIPILIH (Sesuai variabel CSS kamu)
+    if(el) {
+        el.style.borderColor = cart[index] > 0 ? "var(--primary)" : "var(--border)";
+        el.style.background = cart[index] > 0 ? "rgba(0, 210, 255, 0.05)" : "var(--inactive)";
+    }
     hitung();
 }
 
+// [SISA FUNGSI LAINNYA: hitung, applyVoucher, selectPay, updateBtn, prosesPesanan, kirimFormSubmit, switchSlide, window.onload]
+// PASTIKAN window.onload tetap memantau input seperti sebelumnya.
 function hitung() {
     let txt = ""; let subtotal = 0;
     MENU_JOKI.forEach((item, index) => {
@@ -261,3 +275,4 @@ window.onload = () => {
         }
     };
 };
+
