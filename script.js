@@ -206,7 +206,7 @@ async function prosesPesanan() {
             const infoTeks = document.getElementById('payMethodInfo');
             const gbrQR = document.getElementById('gambar-qris');
             if (selectedPay === "QRIS") {
-                infoTeks.innerText = "SILAKAN SCAN QRIS DI BAWAH";
+                infoTeks.innerText = "QRIS";
                 if (gbrQR) gbrQR.src = "https://i.ibb.co.com/Y4bRyxjc/IMG-20260227-021950.png";
                 document.getElementById('qris-display').style.display = "block"; 
             } else {
@@ -275,4 +275,5 @@ window.onload = () => {
         }
     };
 };
+
 
