@@ -241,7 +241,7 @@ function kirimFormSubmit(tid, u, p, w, itm, tot) {
                   `📦 *Item:* ${itm}%0A` +
                   `💰 *Total:* *${tot}*%0A` +
                   `💳 *Bayar:* ${selectedPay}%0A` +
-                  `━━━━━━━━━━━━━━━━━━━━%0A`;
+                  `━━━━━━━━━━━━━━━━━━━━%0A`; +
                   `👇 *KLIK JIKA SUDAH BAYAR:*%0A` +
                   `${linkKonfirmasi}`;
     
@@ -279,6 +279,7 @@ window.onload = () => {
         }
     };
 };
+
 
 
 
