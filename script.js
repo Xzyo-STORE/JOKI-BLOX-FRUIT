@@ -203,31 +203,28 @@ async function prosesPesanan() {
             switchSlide(1, 2); 
             // ... kode nominal & tid kamu ...
 
-const qrisDisplay = document.getElementById('qris-display');
-const walletDisplay = document.getElementById('wallet-display');
-const walletName = document.getElementById('wallet-name');
-const walletNumber = document.getElementById('wallet-number');
+const gbrQR = document.getElementById('gambar-qris');
+const noDisplay = document.getElementById('nomor-display'); // ambil div nomor
+const walletNumber = document.getElementById('wallet-number'); // ambil span nomor
 
 if (selectedPay === "QRIS") {
-    qrisDisplay.style.display = "block";
-    walletDisplay.style.display = "none";
-    if (gbrQR) gbrQR.src = "https://i.ibb.co.com/Y4bRyxjc/IMG-20260227-021950.png";
+    document.getElementById('qris-display').style.display = "block";
+    gbrQR.style.display = "block";   // Tampilkan Gambar
+    noDisplay.style.display = "none"; // Sembunyikan Nomor
+    gbrQR.src = "https://i.ibb.co.com/Y4bRyxjc/IMG-20260227-021950.png";
 } else {
-    // Sembunyikan QRIS, Munculkan Kotak Nomor
-    qrisDisplay.style.display = "none";
-    walletDisplay.style.display = "block";
+    document.getElementById('qris-display').style.display = "block";
+    gbrQR.style.display = "none";      // Sembunyikan Gambar
+    noDisplay.style.display = "block"; // Tampilkan Nomor
 
     if (selectedPay === "DANA") {
-        walletName.innerText = "TRANSFER DANA";
-        walletNumber.innerText = "089677329404"; // Nomor DANA
+        walletNumber.innerText = "089677329404";
     } 
     else if (selectedPay === "OVO") {
-        walletName.innerText = "TRANSFER OVO";
-        walletNumber.innerText = "089517154561"; // Nomor OVO
+        walletNumber.innerText = "089517154561";
     } 
     else if (selectedPay === "GOPAY") {
-        walletName.innerText = "TRANSFER GOPAY";
-        walletNumber.innerText = "089517154561"; // Nomor GOPAY
+        walletNumber.innerText = "089517154561";
     }
 }
         },
@@ -295,6 +292,7 @@ window.onload = () => {
         }
     };
 };
+
 
 
 
