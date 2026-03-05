@@ -59,7 +59,7 @@
                         <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/8/86/Gopay_logo.svg/1200px-Gopay_logo.svg.png" alt="GOPAY">
                     </div>
                     <div class="pay-bar" onclick="selectPay('QRIS', this)">
-                        <span>QRIS / ALL PAY</span>
+                        <span>QRIS</span>
                         <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/a2/Logo_QRIS.svg/1200px-Logo_QRIS.svg.png" alt="QRIS">
                     </div>
                 </div>
@@ -91,7 +91,16 @@
 
             <p style="font-size:12px; color:#8b949e; margin-top:10px;">Silakan transfer sesuai nominal, lalu tunggu admin memproses pesananmu.</p>
         </div>
-    </div>
+        <div id="wallet-display" style="background:white; padding:15px; border-radius:15px; display:none; text-align:center;">
+    <p id="wallet-name" style="color:black; font-weight:800; margin-bottom:10px; font-size:12px; text-transform: uppercase;"></p>
+    
+         <div style="border: 2px dashed #007bff; padding: 10px; border-radius: 10px; background: #f0f7ff;">
+            <span id="wallet-number" style="color:#007bff; font-weight:800; font-size:18px; letter-spacing: 1px;">E WALLET</span>
+         </div>
+    
+         <p style="color:gray; font-size:10px; margin-top:10px;">Silahkan transfer sesuai nominal ke nomor di atas.</p>
+        </div>
+     </div>
 
     <div id="slide-3" class="slide">
         <div class="card text-center">
@@ -120,6 +129,7 @@
 <script src="script.js"></script>
 </body>
 </html>
+
 
 
 
