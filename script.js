@@ -203,32 +203,26 @@ async function prosesPesanan() {
             switchSlide(1, 2); 
             // ... kode nominal & tid kamu ...
 
-const gbrQR = document.getElementById('gambar-qris');
-const noDisplay = document.getElementById('nomor-display'); // ambil div nomor
-const walletNumber = document.getElementById('wallet-number'); // ambil span nomor
+setTimeout(() => {
+            loader.style.display = 'none';
+            switchSlide(1, 2); 
+            document.getElementById('payNominal').innerText = tot;
+            document.getElementById('displayTid').innerText = currentTid;
+            const infoTeks = document.getElementById('payMethodInfo');
+            const gbrQR = document.getElementById('gambar-qris');
+            
+            if (selectedPay === "QRIS") {
+                infoTeks.innerText = "QRIS";
+                if (gbrQR) gbrQR.src = "https://i.ibb.co.com/Y4bRyxjc/IMG-20260227-021950.png";
+                document.getElementById('qris-display').style.display = "block"; 
+            } else {
+                document.getElementById('qris-display').style.display = "none"; 
+                if (selectedPay === "DANA") infoTeks.innerText = "DANA: 089677329404";
+                else if (selectedPay === "OVO") infoTeks.innerText = "OVO: 089517154561";
+                else if (selectedPay === "GOPAY") infoTeks.innerText = "GOPAY: 089517154561";
+            }
+        }, 1200);
 
-if (selectedPay === "QRIS") {
-    document.getElementById('qris-display').style.display = "block";
-    gbrQR.style.display = "block";   // Tampilkan Gambar
-    noDisplay.style.display = "none"; // Sembunyikan Nomor
-    gbrQR.src = "https://i.ibb.co.com/Y4bRyxjc/IMG-20260227-021950.png";
-} else {
-    document.getElementById('qris-display').style.display = "block";
-    gbrQR.style.display = "none";      // Sembunyikan Gambar
-    noDisplay.style.display = "block"; // Tampilkan Nomor
-
-    if (selectedPay === "DANA") {
-        walletNumber.innerText = "089677329404";
-    } 
-    else if (selectedPay === "OVO") {
-        walletNumber.innerText = "089517154561";
-    } 
-    else if (selectedPay === "GOPAY") {
-        walletNumber.innerText = "089517154561";
-    }
-}
-        },
-        1200);
         db.ref('orders/' + currentTid + '/status').on('value', snap => {
             if(snap.val() === 's') tampilkanSlide3(currentTid, u, itm, tot);
         });
@@ -292,6 +286,7 @@ window.onload = () => {
         }
     };
 };
+
 
 
 
